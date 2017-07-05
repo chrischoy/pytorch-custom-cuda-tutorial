@@ -1,6 +1,16 @@
 # Pytorch CUDA Foreign Function Interface Tutorial
 
-Tutorial code for making a Pytorch CUDA FFI based on the pytorch [C extension](https://github.com/pytorch/extension-ffi). The current version of pytorch does not support [broadcasting sum](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html), thus we have to manually expand a tensor like using `expand_as` which makes a new tensor and takes additional computation which is unnecessary.
+This repository contains a tutorial code for making a Pytorch CUDA FFI. The
+code is based on the pytorch [C extension
+example](https://github.com/pytorch/extension-ffi).
+
+In this repository, we will build a simple CUDA based broadcasting sum
+function.  The current version of pytorch does not support [broadcasting
+sum](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html), thus we
+have to manually expand a tensor like using `expand_as` which makes a new
+tensor and takes additional memory and computation.
+
+For example,
 
 ```
 a = torch.randn(3, 5)
@@ -13,6 +23,12 @@ b_like_a = b.expand_as(a)
 c = a + b_like_a
 ```
 
+In this post, we will build a function that can compute `a += b` without
+explicitly expanding `b`.
+
+```
+mathutil.broadcast_sum(a, b, *map(int, a.size()))
+```
 
 ## Make a CUDA kernel
 
@@ -101,4 +117,11 @@ ffi.build()
 
 ## Test!
 
-Finally, we can test our function.
+Finally, we can test our function by building it.
+In the readme, I removed a lot of details, but you can see a working example.
+
+```
+git clone https://github.com/chrischoy/pytorch-cffi-tutorial
+cd pytorch-cffi-tutorial
+make
+```
