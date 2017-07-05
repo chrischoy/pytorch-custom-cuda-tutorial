@@ -1,7 +1,7 @@
 # Pytorch CUDA Foreign Function Interface Tutorial
 
-This repository contains a tutorial code for making a Pytorch CUDA FFI. The
-code is based on the pytorch [C extension
+This repository contains a tutorial code for making a custom CUDA function for
+pytorch. The code is based on the pytorch [C extension
 example](https://github.com/pytorch/extension-ffi).
 
 In this repository, we will build a simple CUDA based broadcasting sum
@@ -16,11 +16,11 @@ For example,
 a = torch.randn(3, 5)
 b = torch.randn(3, 1)
 # The following line will give an error
-# c = a + b
+# a += b
 
 # Expand b to have the same dimension as a
 b_like_a = b.expand_as(a)
-c = a + b_like_a
+a += b_like_a
 ```
 
 In this post, we will build a function that can compute `a += b` without
@@ -125,3 +125,7 @@ git clone https://github.com/chrischoy/pytorch-cffi-tutorial
 cd pytorch-cffi-tutorial
 make
 ```
+
+## Note
+
+The function only takes `THCudaTensor`, which is `torch.FloatTensor().cuda()` in python.
