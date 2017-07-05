@@ -12,7 +12,7 @@ tensor and takes additional memory and computation.
 
 For example,
 
-```
+```python
 a = torch.randn(3, 5)
 b = torch.randn(3, 1)
 # The following line will give an error
@@ -26,7 +26,7 @@ c = a + b_like_a
 In this post, we will build a function that can compute `a += b` without
 explicitly expanding `b`.
 
-```
+```python
 mathutil.broadcast_sum(a, b, *map(int, a.size()))
 ```
 
@@ -34,7 +34,7 @@ mathutil.broadcast_sum(a, b, *map(int, a.size()))
 
 First, let's make a cuda kernel that adds `b` to `a` without making a copy of a tensor `b`.
 
-```
+```cuda
 __global__ void broadcast_sum_kernel(float *a, float *b, int x, int y, int size)
 {
     int i = (blockIdx.x + blockIdx.y * gridDim.x) * blockDim.x + threadIdx.x;
@@ -50,7 +50,7 @@ __global__ void broadcast_sum_kernel(float *a, float *b, int x, int y, int size)
 Once you made a CUDA kernel, you have to wrap it with a C code. However, we are not using the pytorch backend yet. Note that the inputs are already device pointers.
 
 
-```
+```c++
 void broadcast_sum_cuda(float *a, float *b, int x, int y, cudaStream_t stream)
 {
     int size = x * y;
@@ -72,7 +72,7 @@ void broadcast_sum_cuda(float *a, float *b, int x, int y, cudaStream_t stream)
 Next, we have to connect the pytorch backend with our C wrapper. You can expose the device pointer using the function `THCudaTensor_data`. The pointers `a` and `b` are device pointers (on GPU).
 
 
-```
+```c++
 extern THCState *state;
 
 int broadcast_sum(THCudaTensor *a_tensor, THCudaTensor *b_tensor, int x, int y)
@@ -93,13 +93,13 @@ Now that we built the cuda function and a pytorch function, we need to expose th
 
 We will first build a shared library using `nvcc`.
 
-```
+```shell
 nvcc ... -o build/mathutil_cuda_kernel.so src/mathutil_cuda_kernel.cu
 ```
 
 Then, we will use the pytorch `torch.utils.ffi.create_extension` function which automatically put appropriate headers and builds a python loadable shared library.
 
-```
+```python
 from torch.utils.ffi import create_extension
 
 ...
@@ -120,7 +120,7 @@ ffi.build()
 Finally, we can test our function by building it.
 In the readme, I removed a lot of details, but you can see a working example.
 
-```
+```shell
 git clone https://github.com/chrischoy/pytorch-cffi-tutorial
 cd pytorch-cffi-tutorial
 make
