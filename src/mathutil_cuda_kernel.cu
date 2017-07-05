@@ -32,8 +32,7 @@ void broadcast_sum_cuda(float *a, float *b, int x, int y, cudaStream_t stream)
     int size = x * y;
     cudaError_t err;
 
-    broadcast_sum_kernel<<<cuda_gridsize(size), BLOCK, 0, stream>>>(a, b, x, y,
-                                                                    size);
+    broadcast_sum_kernel<<<cuda_gridsize(size), BLOCK, 0, stream>>>(a, b, x, y, size);
 
     err = cudaGetLastError();
     if (cudaSuccess != err)
