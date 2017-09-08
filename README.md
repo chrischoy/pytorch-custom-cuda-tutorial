@@ -128,7 +128,6 @@ In the readme, I removed a lot of details, but you can see a working example.
 git clone https://github.com/chrischoy/pytorch-cffi-tutorial
 cd pytorch-cffi-tutorial
 make
-python build_ffi.py
 ```
 
 ## Note
