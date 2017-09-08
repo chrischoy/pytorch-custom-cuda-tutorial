@@ -1,4 +1,4 @@
-# Tutorial for making a custom pytorch function with a custom CUDA kernel
+# Custom CUDA kernel in Pytorch Tutorial
 
 This repository contains a tutorial code for making a custom CUDA function for
 pytorch. The code is based on the pytorch [C extension
