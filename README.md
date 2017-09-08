@@ -6,7 +6,7 @@ example](https://github.com/pytorch/extension-ffi).
 
 **Disclaimer**
 
-`This tutorial was written when pytorch did not support broadcasting sum. Now that it supports, probably you wouldn't need to make your own broadcasting subm, but you can still follow the tutorial to build your own custom layer that supports a CUDA kernel.`
+`This tutorial was written when pytorch did not support broadcasting sum. Now that it supports, probably you wouldn't need to make your own broadcasting sum function, but you can still follow the tutorial to build your own custom layer with a custom CUDA kernel.`
 
 In this repository, we will build a simple CUDA based broadcasting sum
 function.  The current version of pytorch does not support [broadcasting
@@ -128,6 +128,7 @@ In the readme, I removed a lot of details, but you can see a working example.
 git clone https://github.com/chrischoy/pytorch-cffi-tutorial
 cd pytorch-cffi-tutorial
 make
+python build_ffi.py
 ```
 
 ## Note
