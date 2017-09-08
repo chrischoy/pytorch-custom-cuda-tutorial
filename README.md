@@ -1,8 +1,12 @@
-# Pytorch CUDA Foreign Function Interface Tutorial
+# Tutorial for making a custom pytorch function with a custom CUDA kernel
 
 This repository contains a tutorial code for making a custom CUDA function for
 pytorch. The code is based on the pytorch [C extension
 example](https://github.com/pytorch/extension-ffi).
+
+**Disclaimer**
+
+`This tutorial was written when pytorch did not support broadcasting sum. Now that it supports, probably you wouldn't need to make your own broadcasting subm, but you can still follow the tutorial to build your own custom layer that supports a CUDA kernel.`
 
 In this repository, we will build a simple CUDA based broadcasting sum
 function.  The current version of pytorch does not support [broadcasting
