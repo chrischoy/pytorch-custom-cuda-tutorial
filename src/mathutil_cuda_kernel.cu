@@ -22,9 +22,9 @@ __global__ void broadcast_sum_kernel(float *a, float *b, int x, int y, int size)
 {
     int i = (blockIdx.x + blockIdx.y * gridDim.x) * blockDim.x + threadIdx.x;
     if(i >= size) return;
-    int j = i % x; i = i / x;
-    int k = i % y;
-    a[IDX2D(j, k, y)] += b[k];
+    int j = i % y; i = i / y;
+    int k = i % x;
+    a[IDX2D(k, j, y)] += b[k];
 }
 
 void broadcast_sum_cuda(float *a, float *b, int x, int y, cudaStream_t stream)
