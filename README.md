@@ -6,7 +6,7 @@ example](https://github.com/pytorch/extension-ffi).
 
 **Disclaimer**
 
-- 2019/01/02: I wrote another tutorial on how to make a pytorch C++/CUDA extension with a Makefile on [here](https://github.com/chrischoy/MakePytorchPlusPlus)
+- 2019/01/02: I wrote **[another up-to-date tutorial](https://github.com/chrischoy/MakePytorchPlusPlus)** on how to make a pytorch C++/CUDA extension with a Makefile. Associate git page is on **[https://github.com/chrischoy/MakePytorchPlusPlus](https://github.com/chrischoy/MakePytorchPlusPlus)**
 - 2018/12/09: Pytorch CFFI is now deprecated in favor of [C++ extension](https://pytorch.org/tutorials/advanced/cpp_extension.html) from pytorch v1.0.
 
 `This tutorial was written when pytorch did not support broadcasting sum. Now that it supports, probably you wouldn't need to make your own broadcasting sum function, but you can still follow the tutorial to build your own custom layer with a custom CUDA kernel.`
